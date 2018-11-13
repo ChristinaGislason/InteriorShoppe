@@ -26,8 +26,8 @@ namespace InteriorShoppe
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<InteriorShoppeDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<InteriorShoppeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<InteriorShoppeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductionDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
