@@ -17,9 +17,10 @@ namespace InteriorShoppe
         public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder().AddEnvironmentVariables();
-            builder.AddUserSecrets<Startup>();
-            Configuration = builder.Build();
+            //var builder = new ConfigurationBuilder().AddEnvironmentVariables();
+            //builder.AddUserSecrets<Startup>();
+            Configuration = configuration;
+
         }
 
         public void ConfigureServices(IServiceCollection services)
