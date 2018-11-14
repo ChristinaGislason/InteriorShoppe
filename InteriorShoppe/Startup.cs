@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InteriorShoppe.Data;
+using InteriorShoppe.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +29,11 @@ namespace InteriorShoppe
         {
             services.AddMvc();
             //services.AddDbContext<InteriorShoppeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<InteriorShoppeDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddDbContext<InteriorShoppeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductionDB")));
         }
 
