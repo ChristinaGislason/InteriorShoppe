@@ -7,17 +7,17 @@ namespace InteriorShoppe.Models.Interfaces
 {
     public interface IInventory
     {
-        //Creating
-        Task CreateFurniture(Furniture furniture);
+        //////Creating
+        ////Task CreateFurniture(Furniture furniture);
 
-        //Reading
-        Task<List<Furniture>> GetAllFurniture();
-        Task<Furniture> GetFurnitureByID(int? id);
+        //////Reading
+        ////Task<List<Furniture>> GetAllFurniture();
+        ////Task<Furniture> GetFurnitureByID(int? id);
 
-        //Updating
-        Task UpdateFurniture(Furniture furniture);
+        //////Updating
+        ////Task UpdateFurniture(Furniture furniture);
         
-        //Deleting
-        Task DeleteFurniture(Furniture furniture);
+        //////Deleting
+        ////Task DeleteFurniture(Furniture furniture);
     }
 }
