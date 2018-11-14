@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using InteriorShoppe.Data;
 using InteriorShoppe.Models;
+using InteriorShoppe.Models.Interfaces;
+using InteriorShoppe.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +37,7 @@ namespace InteriorShoppe
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<InteriorShoppeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProductionDB")));
+            services.AddTransient<IInventory, InventoryServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
