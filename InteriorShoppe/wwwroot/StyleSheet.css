@@ -1,0 +1,29 @@
+﻿body {
+    background: url(brick.jfif);
+}
+
+.bannerHeading{
+    background-color: ivory;
+    width: 100%;
+    height: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.navBar {
+    display: flex;
+    background-color: peachpuff;
+    justify-content: center;
+    width: 100%;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)*/
+}
+
+.navBar h2 {
+    padding: 0 1em;
+    font-family: 'Josefin Sans', sans-serif;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
