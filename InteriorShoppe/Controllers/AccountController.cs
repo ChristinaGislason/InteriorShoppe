@@ -61,8 +61,7 @@ namespace InteriorShoppe.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
-            // default username: octo@cat.com
-            // password: @Cat123!
+           
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
@@ -73,7 +72,7 @@ namespace InteriorShoppe.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Your are wrong");
+                    ModelState.AddModelError(string.Empty, "You are wrong");
                 }
 
 
