@@ -1,4 +1,8 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+﻿@using Microsoft.AspNetCore.Identity
+@using InteriorShoppe.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <title></title>
@@ -18,6 +22,20 @@
         <h2>Kitchen</h2>
         <h2>Seasonal</h2>
         <h2>Clearance</h2>
+        @if (SignInManager.IsSignedIn(User))
+        {
+
+        }
+        else
+        {
+            <form asp-action="Login" asp-controller="Account" method="get">
+                <button type="submit">Login</button>
+            </form>
+
+            <form asp-action="Register" asp-controller="Account" method="get">
+                <button type="submit">Register</button>
+            </form>
+        }
     </div>
     @RenderBody()
 </body>
