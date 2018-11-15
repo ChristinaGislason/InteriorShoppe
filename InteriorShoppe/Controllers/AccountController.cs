@@ -5,11 +5,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using InteriorShoppe.Models;
 using InteriorShoppe.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InteriorShoppe.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private UserManager<ApplicationUser> _userManager;
@@ -114,6 +116,15 @@ namespace InteriorShoppe.Controllers
             }
 
             return View(lvm);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
         }
 
     }
