@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using InteriorShoppe.Models;
 using InteriorShoppe.Models.ViewModels;
@@ -45,11 +46,45 @@ namespace InteriorShoppe.Controllers
 
                 if (result.Succeeded)
                 {
+                    // Custom Claim type for full name
+                    Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+
+                    // claim type for birthday
+                    Claim birthdayClaim = new Claim(
+                        ClaimTypes.DateOfBirth,
+                        new DateTime(user.Birthday.Year, user.Birthday.Month, user.Birthday.Day).ToString("u"), ClaimValueTypes.DateTime);
+
+                    // claim type for email
+                    Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+
+                    List<Claim> myclaims = new List<Claim>()
+                    {
+                        fullNameClaim,
+                        birthdayClaim,
+                        emailClaim
+                    };
+
+                    //myclaims.Add(fullNameClaim);
+                    //myclaims.Add(birthdayClaim);
+                    //myclaims.Add(emailClaim);
+
+                    await _userManager.AddClaimsAsync(user, myclaims);
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    return RedirectToAction("Index", "Home");
+
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
                 }
 
             }
-            return View();
+            return View(rvm);
         }
 
         [HttpGet]
