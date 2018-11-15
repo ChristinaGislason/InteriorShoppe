@@ -48,6 +48,7 @@ namespace InteriorShoppe.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
                 }
 
             }
