@@ -31,7 +31,13 @@ namespace InteriorShoppe
         {
             services.AddMvc();
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireLowercase = true;
+            }
+
+            )
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
