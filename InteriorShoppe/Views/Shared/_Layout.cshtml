@@ -24,6 +24,9 @@
         <h2>Clearance</h2>
         @if (SignInManager.IsSignedIn(User))
         {
+        <h2>
+            Welcome, @User.Claims.First(name => name.Type == "FullName").Value
+        </h2>
             <form asp-action="Logout" asp-controller="Account" method="post">
                 <button type="submit">Logout</button>
             </form>
