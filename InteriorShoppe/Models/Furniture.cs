@@ -13,7 +13,7 @@ namespace InteriorShoppe.Models
 
         [Required]
         [Display(Name = "Product SKU")]
-        public string SKU { get; set; }
+        public int SKU { get; set; }
 
         [Required]
         [Display(Name = "Furniture Name")]
