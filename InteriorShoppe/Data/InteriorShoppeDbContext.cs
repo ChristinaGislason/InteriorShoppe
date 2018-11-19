@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InteriorShoppe.Models;
 
 namespace InteriorShoppe.Data
 {
@@ -183,5 +184,6 @@ namespace InteriorShoppe.Data
                 }
             );
         }
+        public DbSet<InteriorShoppe.Models.Furniture> Furniture { get; set; }
     }
 }
