@@ -43,10 +43,10 @@ namespace InteriorShoppe
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<InteriorShoppeDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                 options.UseSqlServer(Configuration.GetConnectionString("ShoppeProductionDB")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+                 options.UseSqlServer(Configuration.GetConnectionString("IdentityProductionDB")));
 
             services.AddTransient<IInventory, InventoryServices>();
 
