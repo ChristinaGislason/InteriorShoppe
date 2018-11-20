@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InteriorShoppe.Data;
 using InteriorShoppe.Models;
+using InteriorShoppe.Models.Handlers;
 using InteriorShoppe.Models.Interfaces;
 using InteriorShoppe.Models.Services;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +49,11 @@ namespace InteriorShoppe
                  options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             services.AddTransient<IInventory, InventoryServices>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("EduEmailPolicy", policy => policy.Requirements.Add(new EduEmailRequirementHandler()));
+            });
         }
 
     
