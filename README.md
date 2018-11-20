@@ -13,29 +13,29 @@ view all items in the store's inventory.
 ## CHALLENGE
 
 #### Milestone 1/
-Properly setup Azure Dev Ops as a Project Management Tool in order to organize tasks efficiently;
-Build out the skeleton of an MVC site with a Home Controller and use SQL Server as our database;
+Properly setup Azure Dev Ops as a Project Management Tool in order to organize tasks efficiently;\
+Build out the skeleton of an MVC site with a Home Controller and use SQL Server as our database;\
 Deploy both database and web app to Azure;
 
 #### Milestone 2/
-Utilize and enable ASP.NET Core identity API so the site is secure for users;
-Ensure users can register for an account on the site, so they have a personalized experience;
+Utilize and enable ASP.NET Core identity API so the site is secure for users;\
+Ensure users can register for an account on the site, so they have a personalized experience;\
 Utilize the repository design pattern to easily switch between production and development 
-environments;
+environments;\
 Seed at least 10 products in the database for initial launch of the site;
 
 #### Milestone 3/
 
-Allow user to login to the website on a custom secure login page;
-Capture custom claims upon registration of the site;
-Greet user with a custom home page when they visit the site;
-User can either login or register easily through a link on the home page;
+Allow user to login to the website on a custom secure login page;\
+Capture custom claims of full name, birthday and email upon registration of the site;\
+Greet user with a custom home page when they visit the site;\
+User can either login or register easily through a link on the home page;\
 User should be greeted, after login, with their first and last name;
 
 #### Milestone 4/
 
-Implement a custom claims-based policy;
-Ensure part of the site is only accessible to those who meet the criteria for a specific policy;
+Implement a custom claims-based policy that checks email to see if it includes "edu";\
+Ensure part of the site is only accessible to those who meet the criteria for a specific policy stated above so to determine students have access to the dorm room furnishing page;\
 Create a page where visitors can view all the products in the store's inventory so that 
 they can eventually make purchase(s).
 
