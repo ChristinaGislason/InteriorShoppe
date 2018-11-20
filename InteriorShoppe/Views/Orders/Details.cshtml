@@ -1,4 +1,4 @@
-﻿@model InteriorShoppe.Models.Basket
+﻿@model InteriorShoppe.Models.Order
 
 @{
     ViewData["Title"] = "Details";
@@ -7,20 +7,20 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Basket</h4>
+    <h4>Order</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FurnitureID)
+            @Html.DisplayNameFor(model => model.user)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FurnitureID)
+            @Html.DisplayFor(model => model.user.Id)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
+            @Html.DisplayNameFor(model => model.basket)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Quantity)
+            @Html.DisplayFor(model => model.basket.ID)
         </dd>
     </dl>
 </div>

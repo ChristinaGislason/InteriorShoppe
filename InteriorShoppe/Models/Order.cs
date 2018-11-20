@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace InteriorShoppe.Models
 {
-    public class Basket
+    public class Order
     {
         [Required]
         public int ID { get; set; }
 
         [Required]
-        public int FurnitureID { get; set; }
+        public int BasketID { get; set; }
 
         [Required]
-        [Display(Name = "Quantity")]
-        public int Quantity { get; set; }
+        public string ApplicationUserID { get; set; }
 
-        public Order order { get; set; }
-        public ICollection<Furniture> furniture { get; set; }
+        public ApplicationUser user { get; set; }
+        public Basket basket { get; set; }
+
     }
 }

@@ -19,5 +19,7 @@ namespace InteriorShoppe.Models
 
         [Required]
         public DateTime Birthday { get; set; }
+
+        public ICollection<Order> order { get; set; }
     }
 }

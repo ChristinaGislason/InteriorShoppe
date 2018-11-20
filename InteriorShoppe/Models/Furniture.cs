@@ -31,5 +31,7 @@ namespace InteriorShoppe.Models
 
         [Required]
         public string Image { get; set; }
+
+        public Basket basket { get; set; }
     }
 }
