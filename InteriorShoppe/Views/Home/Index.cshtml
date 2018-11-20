@@ -5,25 +5,8 @@
 
 @{
     Layout = "_Layout";
-}
-
-@{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
 
 Welcome Home!
-
-@if (SignInManager.IsSignedIn(User))
-{
-    <p>Welcome to my site @User.Claims.First(name => name.Type == "FullName").Value; </p>
-}
-else
-{
-    <p> You are not logged in!</p>
-}
-
-<form asp-action="Logout" asp-controller="Account" method="post">
-    <button type="submit">LOGOUT!</button>
-</form>
