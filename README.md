@@ -57,7 +57,7 @@ each new weekly sprint.
 
 ## SOLUTION
 
-Deployed website URL:
+Deployed website URL: https://interiorshoppe.azurewebsites.net/
 
 
 
