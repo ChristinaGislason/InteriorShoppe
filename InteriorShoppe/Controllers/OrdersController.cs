@@ -10,22 +10,23 @@ using InteriorShoppe.Models;
 
 namespace InteriorShoppe.Controllers
 {
-    public class BasketsController : Controller
+    public class OrdersController : Controller
     {
         private readonly InteriorShoppeDbContext _context;
 
-        public BasketsController(InteriorShoppeDbContext context)
+        public OrdersController(InteriorShoppeDbContext context)
         {
             _context = context;
         }
 
-        // GET: Baskets
+        // GET: Orders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Basket.ToListAsync());
+            var interiorShoppeDbContext = _context.Order.Include(o => o.basket).Include(o => o.user);
+            return View(await interiorShoppeDbContext.ToListAsync());
         }
 
-        // GET: Baskets/Details/5
+        // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,45 @@ namespace InteriorShoppe.Controllers
                 return NotFound();
             }
 
-            var basket = await _context.Basket
+            var order = await _context.Order
+                .Include(o => o.basket)
+                .Include(o => o.user)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (basket == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(basket);
+            return View(order);
         }
 
-        // GET: Baskets/Create
+        // GET: Orders/Create
         public IActionResult Create()
         {
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID");
+            ViewData["ApplicationUserID"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
-        // POST: Baskets/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FurnitureID,Quantity")] Basket basket)
+        public async Task<IActionResult> Create([Bind("ID,BasketID,ApplicationUserID")] Order order)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(basket);
+                _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(basket);
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", order.BasketID);
+            ViewData["ApplicationUserID"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", order.ApplicationUserID);
+            return View(order);
         }
 
-        // GET: Baskets/Edit/5
+        // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +80,24 @@ namespace InteriorShoppe.Controllers
                 return NotFound();
             }
 
-            var basket = await _context.Basket.FindAsync(id);
-            if (basket == null)
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
-            return View(basket);
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", order.BasketID);
+            ViewData["ApplicationUserID"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", order.ApplicationUserID);
+            return View(order);
         }
 
-        // POST: Baskets/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FurnitureID,Quantity")] Basket basket)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,BasketID,ApplicationUserID")] Order order)
         {
-            if (id != basket.ID)
+            if (id != order.ID)
             {
                 return NotFound();
             }
@@ -97,12 +106,12 @@ namespace InteriorShoppe.Controllers
             {
                 try
                 {
-                    _context.Update(basket);
+                    _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BasketExists(basket.ID))
+                    if (!OrderExists(order.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +122,12 @@ namespace InteriorShoppe.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(basket);
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", order.BasketID);
+            ViewData["ApplicationUserID"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", order.ApplicationUserID);
+            return View(order);
         }
 
-        // GET: Baskets/Delete/5
+        // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +135,32 @@ namespace InteriorShoppe.Controllers
                 return NotFound();
             }
 
-            var basket = await _context.Basket
+            var order = await _context.Order
+                .Include(o => o.basket)
+                .Include(o => o.user)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (basket == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(basket);
+            return View(order);
         }
 
-        // POST: Baskets/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var basket = await _context.Basket.FindAsync(id);
-            _context.Basket.Remove(basket);
+            var order = await _context.Order.FindAsync(id);
+            _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BasketExists(int id)
+        private bool OrderExists(int id)
         {
-            return _context.Basket.Any(e => e.ID == id);
+            return _context.Order.Any(e => e.ID == id);
         }
     }
 }
