@@ -185,6 +185,5 @@ namespace InteriorShoppe.Data
         }
         public DbSet<Furniture> Furniture { get; set; }
         public DbSet<Basket> Basket { get; set; }
-        public DbSet<Order> Order { get; set; }
     }
 }
