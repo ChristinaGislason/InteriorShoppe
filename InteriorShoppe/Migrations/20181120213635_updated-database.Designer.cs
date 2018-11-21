@@ -4,14 +4,16 @@ using InteriorShoppe.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InteriorShoppe.Migrations
 {
     [DbContext(typeof(InteriorShoppeDbContext))]
-    partial class InteriorShoppeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181120213635_updated-database")]
+    partial class updateddatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,11 +77,7 @@ namespace InteriorShoppe.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Property<string>("userId");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("Basket");
                 });
@@ -132,11 +130,25 @@ namespace InteriorShoppe.Migrations
                     );
                 });
 
-            modelBuilder.Entity("InteriorShoppe.Models.Basket", b =>
+            modelBuilder.Entity("InteriorShoppe.Models.Order", b =>
                 {
-                    b.HasOne("InteriorShoppe.Models.ApplicationUser", "user")
-                        .WithMany("basket")
-                        .HasForeignKey("userId");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserID")
+                        .IsRequired();
+
+                    b.Property<int>("BasketID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ApplicationUserID");
+
+                    b.HasIndex("BasketID")
+                        .IsUnique();
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("InteriorShoppe.Models.Furniture", b =>
@@ -144,6 +156,19 @@ namespace InteriorShoppe.Migrations
                     b.HasOne("InteriorShoppe.Models.Basket", "basket")
                         .WithMany("furniture")
                         .HasForeignKey("basketID");
+                });
+
+            modelBuilder.Entity("InteriorShoppe.Models.Order", b =>
+                {
+                    b.HasOne("InteriorShoppe.Models.ApplicationUser", "user")
+                        .WithMany("order")
+                        .HasForeignKey("ApplicationUserID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InteriorShoppe.Models.Basket", "basket")
+                        .WithOne("order")
+                        .HasForeignKey("InteriorShoppe.Models.Order", "BasketID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
