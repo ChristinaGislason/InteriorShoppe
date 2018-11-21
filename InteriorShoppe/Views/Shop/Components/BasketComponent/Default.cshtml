@@ -1,19 +1,17 @@
-﻿@model List<InteriorShoppe.Models.Furniture>
+﻿@model List<InteriorShoppe.Models.Basket>
 
 
 <table class="basketItems">
     <thead>
         <tr>
             <th>Name</th>
-            <th>Price</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Name</td>
-                <td>@item.Price</td>
+                <td>@item.furniture.Count</td>
             </tr>
         }
     </tbody>

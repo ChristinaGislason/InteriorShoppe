@@ -66,7 +66,7 @@ namespace InteriorShoppe.Controllers
         }
 
         // GET: Baskets/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> AddToBasket(int? id)
         {
             if (id == null)
             {
