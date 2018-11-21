@@ -23,7 +23,7 @@ namespace InteriorShoppe.Models.Components
         /// Finds basket associated with the currently logged in user
         /// </summary>
         /// <returns>View and passes list of furrniture in the basket</returns>
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = HttpContext.User; //
             var userId = _userManager.GetUserId(user);
