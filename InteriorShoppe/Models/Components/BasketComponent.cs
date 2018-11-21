@@ -12,10 +12,12 @@ namespace InteriorShoppe.Models.Components
     {
         private InteriorShoppeDbContext _context;
         private UserManager<ApplicationUser> _userManager;
+        private SignInManager<ApplicationUser> _signInManager;
 
-        public BasketComponent(InteriorShoppeDbContext context, UserManager<ApplicationUser> userManager)
+        public BasketComponent(InteriorShoppeDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
+            _signInManager = signInManager;
             _userManager = userManager;
         }
 
@@ -25,11 +27,19 @@ namespace InteriorShoppe.Models.Components
         /// <returns>View and passes list of furrniture in the basket</returns>
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var user = HttpContext.User; //
-            var userId = _userManager.GetUserId(user);
-            var basket = _context.Basket.Where(b => b.user.Id == userId)
-                .ToList();
-            return View(basket);
+            if (_signInManager.IsSignedIn(HttpContext.User))
+            {
+                var user = HttpContext.User; //
+                var userId = _userManager.GetUserId(user);
+                var basket = _context.Basket.Where(b => b.user.Id == userId)
+                    .ToList();
+                return View(basket);
+            }
+            else
+            {
+                return View();
+            }
+           
         }
     }
 }
