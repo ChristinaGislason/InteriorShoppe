@@ -1,4 +1,6 @@
-﻿@model IEnumerable<InteriorShoppe.Models.Furniture>
+﻿@using InteriorShoppe.Models
+
+@model IEnumerable<InteriorShoppe.Models.Furniture>
 
 @{
     Layout = "_Layout";
@@ -56,4 +58,7 @@
             </tr>
         }
     </tbody>
+
+    @await Component.InvokeAsync("BasketComponent")
+
 </table>
