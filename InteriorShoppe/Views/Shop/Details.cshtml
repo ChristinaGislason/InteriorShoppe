@@ -41,7 +41,7 @@
             @Html.DisplayFor(model => model.SKU)
         </dd>
     </dl>
-    <button type="submit">Add to Basket</button>
+    <a asp-action="AddToBasket" asp-route-id="@Model.ID">Add to Basket</a>
 </div>
 <div>
     @*<a asp-action="Edit" asp-route-id="@Model.ID">Edit</a>*@ |
