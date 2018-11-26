@@ -9,7 +9,7 @@ namespace InteriorShoppe.Models
     public class Basket
     {
         [Required]
-        public int ID { get; set; }
+        public int BasketID { get; set; }
 
         [Required]
         public int FurnitureID { get; set; }

@@ -7,34 +7,42 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InteriorShoppe.Data;
 using InteriorShoppe.Models;
+using InteriorShoppe.Models.Interfaces;
 
 namespace InteriorShoppe.Controllers
 {
     public class BasketsController : Controller
     {
         private readonly InteriorShoppeDbContext _context;
+        private readonly IBasket _basket;
+        private readonly IInventory _inventory;
 
-        public BasketsController(InteriorShoppeDbContext context)
+        // Basket contructor-- brings in code into a class 
+        public BasketsController(InteriorShoppeDbContext context, IBasket basket, IInventory inventory)
         {
             _context = context;
+            _basket = basket;
+            _inventory = inventory;
         }
 
         // GET: Baskets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Basket.ToListAsync());
+            var InteriorShoppeDbContext = _context.Basket.Include(u => u.user).Include(f => f.furniture);
+            return View(await InteriorShoppeDbContext.ToListAsync());
         }
 
         // GET: Baskets/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? basketID, int? furnitureID)
         {
-            if (id == null)
+            if (basketID == null || furnitureID == null)
             {
                 return NotFound();
             }
 
             var basket = await _context.Basket
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .Include(u => u.user)
+                .FirstOrDefaultAsync(b => b.BasketID == basketID && b.FurnitureID == furnitureID);
             if (basket == null)
             {
                 return NotFound();
@@ -46,6 +54,9 @@ namespace InteriorShoppe.Controllers
         // GET: Baskets/Create
         public IActionResult Create()
         {
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "Name");
+            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "Name");
+
             return View();
         }
 
@@ -62,22 +73,28 @@ namespace InteriorShoppe.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", basket.BasketID);
+            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", basket.FurnitureID);
+
             return View(basket);
         }
 
         // GET: Baskets/Edit/5
-        public async Task<IActionResult> AddToBasket(int? id)
+        public async Task<IActionResult> AddToBasket(int? basketID, int? furnitureID)
         {
-            if (id == null)
+            if (basketID == null)
             {
                 return NotFound();
             }
 
-            var basket = await _context.Basket.FindAsync(id);
+            var basket = await _context.Basket.FindAsync(basketID, furnitureID);
             if (basket == null)
             {
                 return NotFound();
             }
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", basket.BasketID);
+            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", basket.FurnitureID);
+
             return View(basket);
         }
 
@@ -86,9 +103,9 @@ namespace InteriorShoppe.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FurnitureID,Quantity")] Basket basket)
+        public async Task<IActionResult> Edit(int basketID, [Bind("ID,FurnitureID,Quantity")] Basket basket)
         {
-            if (id != basket.ID)
+            if (basketID != basket.BasketID)
             {
                 return NotFound();
             }
@@ -102,7 +119,7 @@ namespace InteriorShoppe.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BasketExists(basket.ID))
+                    if (!BasketExists(basket.BasketID))
                     {
                         return NotFound();
                     }
@@ -113,19 +130,25 @@ namespace InteriorShoppe.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", basket.BasketID);
+            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", basket.FurnitureID);
+
             return View(basket);
         }
 
         // GET: Baskets/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? basketID, int? furnitureID)
         {
-            if (id == null)
+            if (basketID == null || furnitureID == null)
             {
                 return NotFound();
             }
 
             var basket = await _context.Basket
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .Include(u => u.user)
+                .FirstOrDefaultAsync(b => b.BasketID == basketID && b.FurnitureID == furnitureID);
+
             if (basket == null)
             {
                 return NotFound();
@@ -137,9 +160,9 @@ namespace InteriorShoppe.Controllers
         // POST: Baskets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int basketID, int furnitureID)
         {
-            var basket = await _context.Basket.FindAsync(id);
+            var basket = await _context.Basket.FindAsync(basketID, furnitureID);
             _context.Basket.Remove(basket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -147,7 +170,7 @@ namespace InteriorShoppe.Controllers
 
         private bool BasketExists(int id)
         {
-            return _context.Basket.Any(e => e.ID == id);
+            return _context.Basket.Any(e => e.BasketID == id);
         }
     }
 }

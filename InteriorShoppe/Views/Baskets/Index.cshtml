@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InteriorShoppe.Models.Basket>
+﻿@model InteriorShoppe.Models.Basket
 
 @{
     ViewData["Title"] = "Index";
@@ -22,13 +22,13 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.furniture) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FurnitureID)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
