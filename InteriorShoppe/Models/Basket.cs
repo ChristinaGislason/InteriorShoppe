@@ -14,11 +14,13 @@ namespace InteriorShoppe.Models
         [Required]
         public int FurnitureID { get; set; }
 
+        public string UserID { get; set; }
+
         [Required]
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
 
-        public ApplicationUser user { get; set; }
-        public ICollection<Furniture> furniture { get; set; }
+        public ApplicationUser User { get; set; }
+        public ICollection<Furniture> Furniture { get; set; }
     }
 }

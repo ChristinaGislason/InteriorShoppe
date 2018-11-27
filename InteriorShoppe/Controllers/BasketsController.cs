@@ -8,18 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using InteriorShoppe.Data;
 using InteriorShoppe.Models;
 using InteriorShoppe.Models.Interfaces;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace InteriorShoppe.Controllers
 {
     public class BasketsController : Controller
     {
+        private UserManager<ApplicationUser> _userManager;
+        private SignInManager<ApplicationUser> _signInManager;
         private readonly InteriorShoppeDbContext _context;
         private readonly IBasket _basket;
         private readonly IInventory _inventory;
 
-        // Basket contructor-- brings in code into a class 
-        public BasketsController(InteriorShoppeDbContext context, IBasket basket, IInventory inventory)
+        // Basket constructor with dependencies
+        public BasketsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, InteriorShoppeDbContext context, IBasket basket, IInventory inventory)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
             _basket = basket;
             _inventory = inventory;
@@ -28,7 +34,7 @@ namespace InteriorShoppe.Controllers
         // GET: Baskets
         public async Task<IActionResult> Index()
         {
-            var InteriorShoppeDbContext = _context.Basket.Include(u => u.user).Include(f => f.furniture);
+            var InteriorShoppeDbContext = _context.Basket.Include(u => u.UserID).Include(b => b.BasketID).Include(f => f.FurnitureID);
             return View(await InteriorShoppeDbContext.ToListAsync());
         }
 
@@ -41,7 +47,7 @@ namespace InteriorShoppe.Controllers
             }
 
             var basket = await _context.Basket
-                .Include(u => u.user)
+                .Include(u => u.UserID)
                 .FirstOrDefaultAsync(b => b.BasketID == basketID && b.FurnitureID == furnitureID);
             if (basket == null)
             {
@@ -80,18 +86,37 @@ namespace InteriorShoppe.Controllers
         }
 
         // GET: Baskets/Edit/5
-        public async Task<IActionResult> AddToBasket(int? basketID, int? furnitureID)
+        public async Task<IActionResult> AddToBasket(int? furnitureID)
         {
+        
+            // Get the user
+            var userEmail = User.FindFirst(email => email.Type == ClaimTypes.Email);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var userID = user.Id;
+            
+            // Get the basket
+            var userBasket = await _context.Basket
+                .FirstOrDefaultAsync(b => b.UserID == userID);
+            if (userBasket == null)
+            {
+                return NotFound();
+            }
+
+            return View(furnitureID);
+
+            // Get user id from email
+            var userId = userEmail.
+
+            // Bring in User Manager
+
+            // check the db table for the basket associated with the user
+
+            // check if null
             if (basketID == null)
             {
                 return NotFound();
             }
 
-            var basket = await _context.Basket.FindAsync(basketID, furnitureID);
-            if (basket == null)
-            {
-                return NotFound();
-            }
             ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", basket.BasketID);
             ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", basket.FurnitureID);
 
@@ -146,7 +171,7 @@ namespace InteriorShoppe.Controllers
             }
 
             var basket = await _context.Basket
-                .Include(u => u.user)
+                .Include(u => u.UserID);
                 .FirstOrDefaultAsync(b => b.BasketID == basketID && b.FurnitureID == furnitureID);
 
             if (basket == null)
