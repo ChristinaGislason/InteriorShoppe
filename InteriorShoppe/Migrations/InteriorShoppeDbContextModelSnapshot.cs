@@ -75,11 +75,11 @@ namespace InteriorShoppe.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Property<string>("userId");
+                    b.Property<string>("UserID");
 
                     b.HasKey("BasketID");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Basket");
                 });
@@ -134,15 +134,15 @@ namespace InteriorShoppe.Migrations
 
             modelBuilder.Entity("InteriorShoppe.Models.Basket", b =>
                 {
-                    b.HasOne("InteriorShoppe.Models.ApplicationUser", "user")
+                    b.HasOne("InteriorShoppe.Models.ApplicationUser", "User")
                         .WithMany("basket")
-                        .HasForeignKey("userId");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("InteriorShoppe.Models.Furniture", b =>
                 {
                     b.HasOne("InteriorShoppe.Models.Basket", "basket")
-                        .WithMany("furniture")
+                        .WithMany("Furniture")
                         .HasForeignKey("BasketID");
                 });
 #pragma warning restore 612, 618

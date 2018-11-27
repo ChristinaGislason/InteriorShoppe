@@ -36,9 +36,11 @@ namespace InteriorShoppe.Migrations.ApplicationDb
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -74,6 +76,54 @@ namespace InteriorShoppe.Migrations.ApplicationDb
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("InteriorShoppe.Models.Basket", b =>
+                {
+                    b.Property<int>("BasketID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FurnitureID");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<string>("UserID");
+
+                    b.HasKey("BasketID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Basket");
+                });
+
+            modelBuilder.Entity("InteriorShoppe.Models.Furniture", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BasketID");
+
+                    b.Property<string>("Image")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<string>("RoomCollection");
+
+                    b.Property<int>("SKU");
+
+                    b.Property<string>("TypeCollection");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BasketID");
+
+                    b.ToTable("Furniture");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -184,6 +234,20 @@ namespace InteriorShoppe.Migrations.ApplicationDb
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("InteriorShoppe.Models.Basket", b =>
+                {
+                    b.HasOne("InteriorShoppe.Models.ApplicationUser", "User")
+                        .WithMany("basket")
+                        .HasForeignKey("UserID");
+                });
+
+            modelBuilder.Entity("InteriorShoppe.Models.Furniture", b =>
+                {
+                    b.HasOne("InteriorShoppe.Models.Basket", "basket")
+                        .WithMany("Furniture")
+                        .HasForeignKey("BasketID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InteriorShoppe.Migrations
 {
     [DbContext(typeof(InteriorShoppeDbContext))]
-    [Migration("20181126213717_update-basket")]
-    partial class updatebasket
+    [Migration("20181127205859_initial-migration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,11 +77,11 @@ namespace InteriorShoppe.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Property<string>("userId");
+                    b.Property<string>("UserID");
 
                     b.HasKey("BasketID");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Basket");
                 });
@@ -136,15 +136,15 @@ namespace InteriorShoppe.Migrations
 
             modelBuilder.Entity("InteriorShoppe.Models.Basket", b =>
                 {
-                    b.HasOne("InteriorShoppe.Models.ApplicationUser", "user")
+                    b.HasOne("InteriorShoppe.Models.ApplicationUser", "User")
                         .WithMany("basket")
-                        .HasForeignKey("userId");
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("InteriorShoppe.Models.Furniture", b =>
                 {
                     b.HasOne("InteriorShoppe.Models.Basket", "basket")
-                        .WithMany("furniture")
+                        .WithMany("Furniture")
                         .HasForeignKey("BasketID");
                 });
 #pragma warning restore 612, 618

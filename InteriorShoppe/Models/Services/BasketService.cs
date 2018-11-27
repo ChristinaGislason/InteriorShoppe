@@ -46,5 +46,6 @@ namespace InteriorShoppe.Models.Services
             _context.Basket.Update(basket);
             await _context.SaveChangesAsync();
         }
+
     }
 }

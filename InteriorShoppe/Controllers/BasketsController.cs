@@ -86,7 +86,7 @@ namespace InteriorShoppe.Controllers
         }
 
         // GET: Baskets/Edit/5
-        public async Task<IActionResult> AddToBasket(int? furnitureID)
+        public async Task<IActionResult> AddToBasket(int ID)
         {
         
             // Get the user
@@ -95,32 +95,26 @@ namespace InteriorShoppe.Controllers
             var userID = user.Id;
             
             // Get the basket
-            var userBasket = await _context.Basket
+            var userBasket = _context.Basket
                 .FirstOrDefaultAsync(b => b.UserID == userID);
+
             if (userBasket == null)
             {
-                return NotFound();
+                return NotFound();            
             }
 
-            return View(furnitureID);
-
-            // Get user id from email
-            var userId = userEmail.
-
-            // Bring in User Manager
-
-            // check the db table for the basket associated with the user
-
-            // check if null
-            if (basketID == null)
+            Basket basket = new Basket()
             {
-                return NotFound();
-            }
 
-            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", basket.BasketID);
-            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", basket.FurnitureID);
+            };
 
-            return View(basket);
+            await _basket.UpdateBasket(basket);
+            await _context.SaveChangesAsync();
+
+            //ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", userBasket.Id);
+            //ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", furnit.ID);
+
+            return View("Details", ID);
         }
 
         // POST: Baskets/Edit/5
@@ -162,25 +156,25 @@ namespace InteriorShoppe.Controllers
             return View(basket);
         }
 
-        // GET: Baskets/Delete/5
-        public async Task<IActionResult> Delete(int? basketID, int? furnitureID)
-        {
-            if (basketID == null || furnitureID == null)
-            {
-                return NotFound();
-            }
+        //// GET: Baskets/Delete/5
+        //public async Task<IActionResult> Delete(int? basketID, int? furnitureID)
+        //{
+        //    if (basketID == null || furnitureID == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var basket = await _context.Basket
-                .Include(u => u.UserID);
-                .FirstOrDefaultAsync(b => b.BasketID == basketID && b.FurnitureID == furnitureID);
+        //    var basket = await _context.Basket
+        //        .Include(u => u.UserID);
+        //        .FirstOrDefaultAsync(b => b.BasketID == basketID && b.FurnitureID == furnitureID);
 
-            if (basket == null)
-            {
-                return NotFound();
-            }
+        //    if (basket == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(basket);
-        }
+        //    return View();
+        //}
 
         // POST: Baskets/Delete/5
         [HttpPost, ActionName("Delete")]
