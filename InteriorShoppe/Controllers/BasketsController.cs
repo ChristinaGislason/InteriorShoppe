@@ -10,9 +10,11 @@ using InteriorShoppe.Models;
 using InteriorShoppe.Models.Interfaces;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InteriorShoppe.Controllers
 {
+    [Authorize]
     public class BasketsController : Controller
     {
         private UserManager<ApplicationUser> _userManager;
@@ -91,11 +93,10 @@ namespace InteriorShoppe.Controllers
         
             // Get the user
             var userEmail = User.FindFirst(email => email.Type == ClaimTypes.Email);
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var userID = user.Id;
+            var userID = _userManager.GetUserId(HttpContext.User);
             
             // Get the basket
-            var userBasket = _context.Basket
+            var userBasket = await _context.Basket
                 .FirstOrDefaultAsync(b => b.UserID == userID);
 
             if (userBasket == null)

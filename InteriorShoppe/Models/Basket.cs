@@ -21,6 +21,6 @@ namespace InteriorShoppe.Models
         public int Quantity { get; set; }
 
         public ApplicationUser User { get; set; }
-        public ICollection<Furniture> Furniture { get; set; }
+        public Furniture Furniture { get; set; }
     }
 }

@@ -111,8 +111,6 @@ namespace InteriorShoppe.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "You are wrong");
                 }
-
-
             }
 
             return View(lvm);

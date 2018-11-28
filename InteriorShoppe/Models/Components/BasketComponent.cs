@@ -27,19 +27,11 @@ namespace InteriorShoppe.Models.Components
         /// <returns>View and passes list of furrniture in the basket</returns>
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            if (_signInManager.IsSignedIn(HttpContext.User))
-            {
                 var user = HttpContext.User; //
                 var userId = _userManager.GetUserId(user);
                 var basket = _context.Basket.Where(b => b.User.Id == userId)
                     .ToList();
-                return View(basket);
-            }
-            else
-            {
-                return View();
-            }
-           
+                return View(basket);  
         }
     }
 }
