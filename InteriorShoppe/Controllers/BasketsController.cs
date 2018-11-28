@@ -114,10 +114,6 @@ namespace InteriorShoppe.Controllers
                 };
                 await _basket.CreateBasket(basketItem);
             }
-            
-
-            //ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", userBasket.Id);
-            //ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", furnit.ID);
 
             return RedirectToAction(nameof(Index), "Shop");
         }
