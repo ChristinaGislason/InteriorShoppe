@@ -9,16 +9,17 @@ namespace InteriorShoppe.Models
     public class Basket
     {
         [Required]
-        public int ID { get; set; }
+        public int BasketID { get; set; }
 
         [Required]
         public int FurnitureID { get; set; }
 
+        public string UserID { get; set; }
+
         [Required]
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
-
-        public ApplicationUser user { get; set; }
-        public ICollection<Furniture> furniture { get; set; }
+        
+        public Furniture Furniture { get; set; }
     }
 }

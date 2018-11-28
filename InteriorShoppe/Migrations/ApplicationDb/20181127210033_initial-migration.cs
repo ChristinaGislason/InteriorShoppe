@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InteriorShoppe.Migrations.ApplicationDb
 {
-    public partial class newMigration : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,8 +41,8 @@ namespace InteriorShoppe.Migrations.ApplicationDb
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
                     Birthday = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -156,6 +156,52 @@ namespace InteriorShoppe.Migrations.ApplicationDb
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Basket",
+                columns: table => new
+                {
+                    BasketID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FurnitureID = table.Column<int>(nullable: false),
+                    UserID = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Basket", x => x.BasketID);
+                    table.ForeignKey(
+                        name: "FK_Basket_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Furniture",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SKU = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
+                    RoomCollection = table.Column<string>(nullable: true),
+                    TypeCollection = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: false),
+                    BasketID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Furniture", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Furniture_Basket_BasketID",
+                        column: x => x.BasketID,
+                        principalTable: "Basket",
+                        principalColumn: "BasketID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +240,16 @@ namespace InteriorShoppe.Migrations.ApplicationDb
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Basket_UserID",
+                table: "Basket",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Furniture_BasketID",
+                table: "Furniture",
+                column: "BasketID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -214,7 +270,13 @@ namespace InteriorShoppe.Migrations.ApplicationDb
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Furniture");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Basket");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

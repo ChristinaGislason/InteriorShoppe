@@ -1,22 +1,20 @@
 ﻿@model List<InteriorShoppe.Models.Basket>
 
-
-<table class="basketItems">
-    <thead>
-        <tr>
-            <th>Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<a asp-action="Index" asp-controller="Baskets">Items in Basket: @Model.Sum(elm => elm.Quantity)</a>
+@*
+    <table class="basketItems">
+        <thead>
             <tr>
-                <td>@item.furniture.Count</td>
+                <th>Name</th>
             </tr>
-        }
-    </tbody>
-</table>
-
-
-
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Furniture.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+*@
