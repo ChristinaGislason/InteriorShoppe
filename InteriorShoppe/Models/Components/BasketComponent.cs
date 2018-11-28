@@ -29,7 +29,7 @@ namespace InteriorShoppe.Models.Components
         {
                 var user = HttpContext.User; //
                 var userId = _userManager.GetUserId(user);
-                var basket = _context.Basket.Where(b => b.User.Id == userId)
+                var basket = _context.Basket.Where(b => b.UserID == userId)
                     .ToList();
                 return View(basket);  
         }

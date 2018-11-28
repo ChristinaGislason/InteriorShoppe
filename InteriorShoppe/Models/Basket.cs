@@ -19,8 +19,7 @@ namespace InteriorShoppe.Models
         [Required]
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
-
-        public ApplicationUser User { get; set; }
+        
         public Furniture Furniture { get; set; }
     }
 }

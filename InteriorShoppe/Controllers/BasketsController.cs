@@ -36,8 +36,9 @@ namespace InteriorShoppe.Controllers
         // GET: Baskets
         public async Task<IActionResult> Index()
         {
-            var InteriorShoppeDbContext = _context.Basket.Include(u => u.UserID).Include(b => b.BasketID).Include(f => f.FurnitureID);
-            return View(await InteriorShoppeDbContext.ToListAsync());
+            var userID = _userManager.GetUserId(HttpContext.User);
+            var basketItems = await _basket.GetBasket(userID);
+            return View(basketItems);
         }
 
         // GET: Baskets/Details/5
@@ -96,26 +97,29 @@ namespace InteriorShoppe.Controllers
             var userID = _userManager.GetUserId(HttpContext.User);
             
             // Get the basket
-            var userBasket = await _context.Basket
-                .FirstOrDefaultAsync(b => b.UserID == userID);
+            Basket basketItem = await _basket.GetFurniture(ID);
 
-            if (userBasket == null)
+            if(basketItem != null)
             {
-                return NotFound();            
+                basketItem.Quantity += 1;
+                await _basket.UpdateBasket(basketItem);
             }
-
-            Basket basket = new Basket()
+            else
             {
-
-            };
-
-            await _basket.UpdateBasket(basket);
-            await _context.SaveChangesAsync();
+                basketItem = new Basket()
+                {
+                    UserID = userID,
+                    FurnitureID = ID,
+                    Quantity = 1
+                };
+                await _basket.CreateBasket(basketItem);
+            }
+            
 
             //ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", userBasket.Id);
             //ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", furnit.ID);
 
-            return View("Details", ID);
+            return RedirectToAction(nameof(Index), "Shop");
         }
 
         // POST: Baskets/Edit/5

@@ -1,5 +1,6 @@
 ﻿@model List<InteriorShoppe.Models.Basket>
-Items in Basket: @Model.Sum(elm => elm.Quantity)
+
+<a asp-action="Index" asp-controller="Baskets">Items in Basket: @Model.Sum(elm => elm.Quantity)</a>
 @*
     <table class="basketItems">
         <thead>

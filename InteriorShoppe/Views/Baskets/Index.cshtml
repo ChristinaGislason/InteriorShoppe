@@ -13,7 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FurnitureID)
+                @Html.DisplayNameFor(model => model.Furniture.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Furniture.Price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
@@ -29,6 +32,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Furniture.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.BasketID">Edit</a> |

@@ -24,21 +24,23 @@ namespace InteriorShoppe.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteBasket(int ID)
+        public async Task DeleteBasket(int furnitureID)
         {
-            Basket basket = await GetBasket(ID);
-            _context.Basket.Remove(basket);
+            Basket basketItem = await GetFurniture(furnitureID);
+            _context.Basket.Remove(basketItem);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Basket> GetBasket(int? ID)
+        public async Task<List<Basket>> GetBasket(string userID)
         {
-            return await _context.Basket.FirstOrDefaultAsync(b => b.BasketID == ID);
+            var basketItems = await _context.Basket.Where(b => b.UserID == userID).ToListAsync();
+            basketItems.ForEach(item => item.Furniture = _context.Furniture.Find(item.FurnitureID));
+            return basketItems;
         }
 
-        public async Task<List<Furniture>> GetFurniture(int? ID)
+        public async Task<Basket> GetFurniture(int? ID)
         {
-            return await _context.Furniture.ToListAsync();
+            return await _context.Basket.FirstOrDefaultAsync(item => item.FurnitureID == ID);
         }
 
         public async Task UpdateBasket(Basket basket)

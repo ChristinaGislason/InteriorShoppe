@@ -14,10 +14,10 @@ namespace InteriorShoppe.Models.Interfaces
         Task UpdateBasket(Basket basket);
 
         //Delete
-        Task DeleteBasket(int ID);
+        Task DeleteBasket(int furnitureID);
 
         //Read
-        Task<Basket> GetBasket(int? id);
-        Task<List<Furniture>> GetFurniture(int? id);
+        Task<List<Basket>> GetBasket(string userID);
+        Task<Basket> GetFurniture(int? ID);
     }
 }
