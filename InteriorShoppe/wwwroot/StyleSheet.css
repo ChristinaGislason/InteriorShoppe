@@ -1,7 +1,8 @@
 ﻿body {
     background: url(LandingPageImg.jpg);
     background-size: cover;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
+    font-family: 'Nunito Sans', sans-serif;
 }
 
 header {
@@ -74,4 +75,16 @@ header {
     font-size: 10px;
     align-items: center;
     padding-right: 8px;
+}
+
+.card {
+    background: white;
+    padding: 24px;
+    width: 500px;
+    margin: 10 auto;
+    border: 1px solid #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 1px;
 }
