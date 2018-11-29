@@ -1,23 +1,46 @@
 ﻿body {
-    background: url(brick.jfif);
+    background: url(LandingPageImg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat
 }
 
-.bannerHeading{
-    background-color: ivory;
-    width: 100%;
-    height: 125px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 15px;
+header {
+    background-color: white;
+    text-align: center;
+}
+.bannerHeading {
+    margin: 0;
+    margin-top: 8px;
+    font-family: 'Merriweather', serif;
+    font-size: 46px;
+    padding: 10px 0;
+    padding-bottom: 0px;
+    letter-spacing: 4px;
+}
+
+.bannerSubheading {
+    font-size: 32px;
+    font-family: damion;
+    margin: 0;
+    color: rgba(0,0,0, 0.9);
+    font-weight: 300;
 }
 
 .navBar {
-    display: flex;
-    background-color: peachpuff;
-    justify-content: center;
-    width: 100%;
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)*/
+    background-color: black;
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.navBar a, .navBar button {
+    color: white;
+    text-decoration: none;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1.6em;
+    padding: 6px 26px;
+    letter-spacing: -1.2px;
+    text-transform: uppercase;
 }
 
 .navBar h2 {
@@ -26,4 +49,29 @@
     color: black;
     font-weight: bold;
     font-size: 20px;
+}
+
+.navBar form {
+    margin: 0;
+}
+
+.navBar button {
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.navBar-primary {
+    display: flex;
+    justify-content: center;
+}
+
+.navBar-secondary {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 10px;
+    align-items: center;
+    padding-right: 8px;
 }
