@@ -1,48 +1,57 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using InteriorShoppe.Models
 
+
 @inject SignInManager<ApplicationUser> SignInManager
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <title></title>
     <link href="~/StyleSheet.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans|Damion|Merriweather" rel="stylesheet">
 </head>
 <body>
     <header>
         <h1 class="bannerHeading">
-            Interior Shoppe
+            The Wright Stuff
         </h1>
+        <h2 class="bannerSubheading">A Mid-Century Modern Interior Shoppe</h2>
     </header>
     <div class="navBar">
-        <h2><a href="@Url.Action("Index", "Home")">Home</a></h2>
-        <h2><a href="@Url.Action("Index", "Shop")">All Products</a></h2>
-        <h2>Living</h2>
-        <h2>Dining</h2>
-        <h2>Bedroom</h2>
-        <h2>Lighting</h2>
-        <h2><a href="@Url.Action("Index", "DormRoom")">Dorm Room</a></h2>
-        <h2>Seasonal</h2>
-        <h2>Clearance</h2>
-        @if (SignInManager.IsSignedIn(User))
-        {
-        <h2>
-            Welcome, @User.Claims.First(name => name.Type == "FullName").Value
-        </h2>
-            <form asp-action="Logout" asp-controller="Account" method="post">
-                <button type="submit">Logout</button>
-            </form>
-        }
-        else
-        {
-            <form asp-action="Login" asp-controller="Account" method="get">
-                <button type="submit">Login</button>
-            </form>
+        <div class="navBar-primary">
+            <a href="@Url.Action("Index", "Home")">Home</a>
+            <a href="@Url.Action("Index", "Shop")">Shop</a>
+            @*<a>Living</a>
+            <a>Dining</a>
+            <a>Bedroom</a>
+            <a>Lighting</a>*@
+            <a href="@Url.Action("Index", "DormRoom")">Dorm Room</a>
+            @*<a>Seasonal</a>
+            <a>Clearance</a>*@
+        </div>
+        <div class="navBar-secondary">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a>
+                    Welcome, @User.Claims.First(name => name.Type == "FullName").Value
+                </a>
+                <form asp-action="Logout" asp-controller="Account" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            }
+            else
+            {
+                <form asp-action="Login" asp-controller="Account" method="get">
+                    <button type="submit">Login</button>
+                </form>
 
-            <form asp-action="Register" asp-controller="Account" method="get">
-                <button type="submit">Register</button>
-            </form>
-        }
+                <form asp-action="Register" asp-controller="Account" method="get">
+                    <button type="submit">Register</button>
+                </form>
+            }
+        </div>
+       
+       
     </div>
     @RenderBody()
 </body>
