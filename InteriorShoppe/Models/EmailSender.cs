@@ -26,6 +26,7 @@ namespace InteriorShoppe.Models
             msg.SetFrom("admin@theWrightStuff.com");
 
             msg.AddTo(email);
+            msg.SetSubject(subject);
             msg.AddContent(MimeType.Html, htmlMessage);
 
             var response = await client.SendEmailAsync(msg);

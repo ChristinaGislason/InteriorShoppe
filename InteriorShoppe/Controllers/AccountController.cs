@@ -7,6 +7,7 @@ using InteriorShoppe.Models;
 using InteriorShoppe.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InteriorShoppe.Controllers
@@ -16,11 +17,13 @@ namespace InteriorShoppe.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
+        private IEmailSender _email;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender email)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _email = email;
         }
 
         [HttpGet]
@@ -73,6 +76,8 @@ namespace InteriorShoppe.Controllers
                     await _userManager.AddClaimsAsync(user, myclaims);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    await _email.SendEmailAsync(rvm.Email, "Welcome!", "<p> Hello!!! <strong>Thank you for registering with the Wright Stuff!! </strong> </p>");
 
                     return RedirectToAction("Index", "Home");
 
