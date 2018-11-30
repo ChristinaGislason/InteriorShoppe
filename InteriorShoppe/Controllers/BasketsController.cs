@@ -40,54 +40,6 @@ namespace InteriorShoppe.Controllers
             var basketItems = await _basket.GetBasket(userID);
             return View(basketItems);
         }
-
-        // GET: Baskets/Details/5
-        public async Task<IActionResult> Details(int? basketID, int? furnitureID)
-        {
-            if (basketID == null || furnitureID == null)
-            {
-                return NotFound();
-            }
-
-            var basket = await _context.Basket
-                .Include(u => u.UserID)
-                .FirstOrDefaultAsync(b => b.BasketID == basketID && b.FurnitureID == furnitureID);
-            if (basket == null)
-            {
-                return NotFound();
-            }
-
-            return View(basket);
-        }
-
-        // GET: Baskets/Create
-        public IActionResult Create()
-        {
-            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "Name");
-            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "Name");
-
-            return View();
-        }
-
-        // POST: Baskets/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FurnitureID,Quantity")] Basket basket)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(basket);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", basket.BasketID);
-            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", basket.FurnitureID);
-
-            return View(basket);
-        }
-
         // GET: Baskets/Edit/5
         public async Task<IActionResult> AddToBasket(int ID)
         {
@@ -118,71 +70,58 @@ namespace InteriorShoppe.Controllers
             return RedirectToAction(nameof(Index), "Shop");
         }
 
+        // GET: Hotels/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var basket = await _basket.GetBasketItem(id);
+            if (basket == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", basket.BasketID);
+
+            return View(basket);
+        }
+
         // POST: Baskets/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int basketID, [Bind("ID,FurnitureID,Quantity")] Basket basket)
+        public async Task<IActionResult> Edit(int BasketID, [Bind("BasketID,FurnitureID,Quantity, UserID")] Basket basket)
         {
-            if (basketID != basket.BasketID)
-            {
-                return NotFound();
-            }
+            
 
             if (ModelState.IsValid)
             {
-                try
+                await _basket.UpdateBasket(basket);
+
+                if (!BasketExists(basket.BasketID))
                 {
-                    _context.Update(basket);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BasketExists(basket.BasketID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
 
             ViewData["BasketID"] = new SelectList(_context.Basket, "ID", "ID", basket.BasketID);
-            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "ID", "ID", basket.FurnitureID);
+            ViewData["FurnitureID"] = new SelectList(_context.Furniture, "Name", "ID", basket.FurnitureID);
 
             return View(basket);
         }
 
-        //// GET: Baskets/Delete/5
-        //public async Task<IActionResult> Delete(int? basketID, int? furnitureID)
-        //{
-        //    if (basketID == null || furnitureID == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var basket = await _context.Basket
-        //        .Include(u => u.UserID);
-        //        .FirstOrDefaultAsync(b => b.BasketID == basketID && b.FurnitureID == furnitureID);
-
-        //    if (basket == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View();
-        //}
-
+        
         // POST: Baskets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int basketID, int furnitureID)
+        public async Task<IActionResult> Delete(int basketID, int furnitureID)
         {
-            var basket = await _context.Basket.FindAsync(basketID, furnitureID);
+            var basket = await _context.Basket.FirstOrDefaultAsync(item => item.BasketID == basketID && item.FurnitureID == furnitureID);
             _context.Basket.Remove(basket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -4,21 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InteriorShoppe.Models
+namespace InteriorShoppe.Models.ViewModels
 {
-    public class Basket
+    public class BasketViewModel
     {
-        [Required]
         public int BasketID { get; set; }
 
-        public string UserID { get; set; }
+        public string UserID { get; set; } 
 
-        public int FurnitureID { get; set; }
-
-        [Required]
-        [Display(Name = "Quantity")]
         public int Quantity { get; set; }
-        
+
         public Furniture Furniture { get; set; }
     }
 }

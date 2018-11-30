@@ -18,6 +18,7 @@ namespace InteriorShoppe.Models.Interfaces
 
         //Read
         Task<List<Basket>> GetBasket(string userID);
+        Task<Basket> GetBasketItem(int?  basketID);
         Task<Basket> GetFurniture(int? ID);
     }
 }

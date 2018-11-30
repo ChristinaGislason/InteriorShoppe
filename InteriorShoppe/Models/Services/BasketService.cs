@@ -38,6 +38,13 @@ namespace InteriorShoppe.Models.Services
             return basketItems;
         }
 
+        public async Task<Basket> GetBasketItem(int? basketID)
+        {
+            var basketItem = await _context.Basket.FirstOrDefaultAsync(item => item.BasketID == basketID);
+            basketItem.Furniture = _context.Furniture.Find(basketItem.FurnitureID);
+            return basketItem;
+        }
+
         public async Task<Basket> GetFurniture(int? ID)
         {
             return await _context.Basket.FirstOrDefaultAsync(item => item.FurnitureID == ID);
