@@ -116,3 +116,7 @@ dd {
 dt {
     font-size:22px;
 }
+
+button.login-button {
+    padding-right: 10px;
+}
