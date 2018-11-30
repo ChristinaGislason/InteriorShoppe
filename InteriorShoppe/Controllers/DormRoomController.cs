@@ -10,6 +10,10 @@ namespace InteriorShoppe.Controllers
     [Authorize(Policy = "EduEmailPolicy")]
     public class DormRoomController : Controller
     {
+        /// <summary>
+        /// Takes user to Dorm Room if they have an .edu email address
+        /// </summary>
+        /// <returns>Dorm Room View</returns>
         public IActionResult Index()
         {
             return View();

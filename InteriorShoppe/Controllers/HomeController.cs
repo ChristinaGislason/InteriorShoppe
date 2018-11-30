@@ -11,6 +11,10 @@ namespace InteriorShoppe.Controllers
     {
         public IActionResult Index()
         {
+            /// <summary>
+            /// Takes user to the Home page
+            /// </summary>
+            /// <returns>Home View</returns>
             return View();
         }
     }

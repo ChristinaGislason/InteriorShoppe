@@ -2,7 +2,7 @@
 
 namespace InteriorShoppe.Migrations
 {
-    public partial class newMigration : Migration
+    public partial class initialproducts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
