@@ -34,8 +34,15 @@ namespace InteriorShoppe.Models.Services
         public async Task<List<Basket>> GetBasket(string userID)
         {
             var basketItems = await _context.Basket.Where(b => b.UserID == userID).ToListAsync();
-            //basketItems.ForEach(item => item.Furniture =_context.Furniture.Find(item.FurnitureID));
+            basketItems.ForEach(item => item.Furniture = _context.Furniture.Find(item.FurnitureID));
             return basketItems;
+        }
+
+        public async Task<Basket> GetBasketItem(int? basketID)
+        {
+            var basketItem = await _context.Basket.FirstOrDefaultAsync(item => item.BasketID == basketID);
+            basketItem.Furniture = _context.Furniture.Find(basketItem.FurnitureID);
+            return basketItem;
         }
 
         public async Task<Basket> GetFurniture(int? ID)

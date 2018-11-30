@@ -19,6 +19,6 @@ namespace InteriorShoppe.Models
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
         
-        public List<Furniture> Furniture { get; set; }
+        public Furniture Furniture { get; set; }
     }
 }

@@ -13,10 +13,11 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="BasketID" />
+            <input type="hidden" asp-for="UserID" />
+            <input type="hidden" asp-for="FurnitureID" />
+
             <div class="form-group">
-                <label asp-for="FurnitureID" class="control-label"></label>
-                <input asp-for="FurnitureID" class="form-control" />
-                <span asp-validation-for="FurnitureID" class="text-danger"></span>
+                <p>Furniture Name: <em>@Model.Furniture.Name</em></p>
             </div>
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
