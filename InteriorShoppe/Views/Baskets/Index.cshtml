@@ -1,54 +1,58 @@
 ﻿@model IEnumerable<InteriorShoppe.Models.Basket>
 
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Basket";
 }
 
-<h2>Basket Items</h2>
+<div class="card">
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Furniture.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Furniture.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <h2>Basket Items</h2>
+
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Furniture.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Furniture.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-controller="Baskets" asp-route-id="@item.BasketID">Edit</a>
-                    <form method="post" asp-action="Delete">
-                        <input type="hidden" value="@item.BasketID" name="basketID" />
-                        <input type="hidden" value="@item.FurnitureID" name="furnitureID" />
-                        <input type="submit" value="Delete" />
-                    </form>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Furniture.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Furniture.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Furniture.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Furniture.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Baskets" asp-route-id="@item.BasketID">Edit</a>
+                        <form method="post" asp-action="Delete">
+                            <input type="hidden" value="@item.BasketID" name="basketID" />
+                            <input type="hidden" value="@item.FurnitureID" name="furnitureID" />
+                            <input type="submit" value="Delete" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<div>
-    <a href="@Url.Action("Receipt", "Checkout")">Checkout</a>
-    <a asp-action="Index" asp-controller="Shop">Back to Shop</a>
+    <div>
+        <a href="@Url.Action("Receipt", "Checkout")">Checkout</a>
+        <a asp-action="Index" asp-controller="Shop">Back to Shop</a>
+    </div>
+
 </div>
-

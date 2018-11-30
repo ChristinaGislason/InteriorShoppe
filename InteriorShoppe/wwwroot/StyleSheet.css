@@ -2,6 +2,9 @@
     background: url(LandingPageImg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+body, th, td, tbody, tr, a, p {
     font-family: 'Nunito Sans', sans-serif;
 }
 
@@ -78,13 +81,42 @@ header {
 }
 
 .card {
-    background: white;
+    background: rgba(255,255,255,0.95);
     padding: 24px;
-    width: 500px;
+    width: 66%;
     margin: 10 auto;
-    border: 1px solid #1e1e1e;
+    border: 1px solid rgba(0,0,0,0.12);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     border-radius: 1px;
+}
+
+.details-furniture-body {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.table {
+    text-align: center;
+}
+
+.image-tile-medium {
+    height: 125px;
+}
+.image-tile-large {
+    height: 250px;
+}
+
+dd {
+    padding-bottom: 10px;
+}
+
+dt {
+    font-size:22px;
+}
+
+button.login-button {
+    padding-right: 10px;
 }
