@@ -23,7 +23,7 @@ namespace InteriorShoppe.Controllers
             _basket = basket;
         }
 
-        public async Task<IActionResult> Reciept()
+        public async Task<IActionResult> Receipt()
         {
             var userID = _userManager.GetUserId(HttpContext.User);
             var basketItems = await _basket.GetBasket(userID);
