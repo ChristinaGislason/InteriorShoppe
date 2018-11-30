@@ -26,12 +26,21 @@ namespace InteriorShoppe.Controllers
             _email = email;
         }
 
+        /// <summary>
+        /// Takes user Registration page
+        /// </summary>
+        /// <returns>Registration View</returns>
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        /// <summary>
+        /// Posts user Registration data to interiorShoppeIdentityDb
+        /// </summary>
+        /// <param name="rvm">Register ViewModel</param>
+        /// <returns>Home View</returns>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
@@ -94,12 +103,21 @@ namespace InteriorShoppe.Controllers
             return View(rvm);
         }
 
+        /// <summary>
+        /// Takes user Login page
+        /// </summary>
+        /// <returns>Login View</returns>
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        /// <summary>
+        /// Verifies user login credentials
+        /// </summary>
+        /// <param name="rvm">Login ViewModel</param>
+        /// <returns>Home View</returns>
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
@@ -114,13 +132,18 @@ namespace InteriorShoppe.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "You are wrong");
+                    ModelState.AddModelError(string.Empty, "Wrong username or passsword");
                 }
             }
 
             return View(lvm);
         }
 
+        /// <summary>
+        /// Logs user out of the web app
+        /// </summary>
+        /// <param name="rvm">Register ViewModel</param>
+        /// <returns>Home View</returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Logout()

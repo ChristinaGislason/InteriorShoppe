@@ -23,6 +23,10 @@ namespace InteriorShoppe.Controllers
             _basket = basket;
         }
 
+        /// <summary>
+        /// Generates user invoice
+        /// </summary>
+        /// <returns>Receipt View</returns>
         public async Task<IActionResult> Receipt()
         {
             var userID = _userManager.GetUserId(HttpContext.User);

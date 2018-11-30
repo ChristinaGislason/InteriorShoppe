@@ -13,7 +13,10 @@ namespace InteriorShoppe.Data
         {
 
         }
-
+        /// <summary>
+        /// Populates the Interior Shoppe Db with seeding data 
+        /// </summary>
+        /// <param name="mb">Model Builder</param>
         protected override void OnModelCreating(ModelBuilder mb)
         {
             mb.Entity<Furniture>().HasKey(

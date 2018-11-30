@@ -10,6 +10,12 @@ using System.Threading.Tasks;
     {
         public class EduEmailRequirementHandler : AuthorizationHandler<EduEmailRequirementHandler>, IAuthorizationRequirement
         {
+        /// <summary>
+        /// Handler to verify that the email claim has been met
+        /// </summary>
+        /// <param name="context">Authorization Handler</param>
+        /// <param name="requirement">Email Requirement</param>
+        /// <returns>Task Completed</returns>
             protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, EduEmailRequirementHandler requirement)
             {
                 if (!context.User.HasClaim(e => e.Type == ClaimTypes.Email))
