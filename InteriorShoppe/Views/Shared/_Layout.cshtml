@@ -22,12 +22,14 @@
             <a href="@Url.Action("Index", "Home")">Home</a>
             <a href="@Url.Action("Index", "Shop")">Shop</a>
             @*<a>Living</a>
-            <a>Dining</a>
-            <a>Bedroom</a>
-            <a>Lighting</a>*@
+        <a>Dining</a>
+        <a>Bedroom</a>
+        <a>Lighting</a>*@
             <a href="@Url.Action("Index", "DormRoom")">Dorm Room</a>
             @*<a>Seasonal</a>
-            <a>Clearance</a>*@
+        <a>Clearance</a>*@
+
+            @await Component.InvokeAsync("BasketComponent")
         </div>
         <div class="navBar-secondary">
             @if (SignInManager.IsSignedIn(User))
