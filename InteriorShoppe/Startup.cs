@@ -45,9 +45,11 @@ namespace InteriorShoppe
 
             services.AddDbContext<InteriorShoppeDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                 //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+                 //options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             services.AddTransient<IInventory, InventoryServices>();
             services.AddTransient<IBasket, BasketService>();
