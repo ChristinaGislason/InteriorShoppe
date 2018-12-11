@@ -7,11 +7,13 @@ using InteriorShoppe.Models;
 using InteriorShoppe.Models.Handlers;
 using InteriorShoppe.Models.Interfaces;
 using InteriorShoppe.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,32 +33,47 @@ namespace InteriorShoppe
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+            .AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Admin", "AdminOnly");
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 3;
                 options.Password.RequireLowercase = true;
-            }
-
-            )
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            //Furniture DB Context Services
             services.AddDbContext<InteriorShoppeDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("ShoppeProductionDB")));
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("IdentityProductionDB")));
-
+                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IInventory, InventoryServices>();
             services.AddTransient<IBasket, BasketService>();
 
+            //Identity DB Context Services
+            services.AddDbContext<ApplicationDbContext>(options =>
+                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+                 //options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+
+            //Policy Services
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("EduEmailPolicy", policy => policy.Requirements.Add(new EduEmailRequirementHandler()));
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.Requirements.Add(new RequireAdminRequirement()));
+            });
+
+            services.AddScoped<IAuthorizationHandler, AdminEmailHandler>();
+
+            //Email Services
             services.AddScoped<IEmailSender, EmailSender>();
         }
 
