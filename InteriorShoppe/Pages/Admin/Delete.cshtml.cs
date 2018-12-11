@@ -28,13 +28,6 @@ namespace InteriorShoppe.Pages.Admin
 
         public async Task<IActionResult> OnPostAsync()
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
-
-            Furniture furniture = 
-
             await _inventory.DeleteFurniture(Furniture.ID);
             return RedirectToPage("./Index");
         }
