@@ -84,14 +84,8 @@ namespace InteriorShoppe.Controllers
                         emailClaim
                     };
 
-                    //myclaims.Add(fullNameClaim);
-                    //myclaims.Add(birthdayClaim);
-                    //myclaims.Add(emailClaim);
-
                     await _userManager.AddClaimsAsync(user, myclaims);
-
                     await _signInManager.SignInAsync(user, isPersistent: false);
-
                     await _email.SendEmailAsync(rvm.Email, "Welcome!", "<p> Hello!!! <strong>Thank you for registering with the Wright Stuff!! </strong> </p>");
 
                     return RedirectToAction("Index", "Home");
