@@ -1,50 +1,54 @@
 ﻿@page
 @model InteriorShoppe.Pages.Admin.IndexModel
 @{
-    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+
 }
 
 <h2>Admin Page</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                SKU
-            </th>
-            <th>
-                NAME
-            </th>
-            <th>
-                PRICE
-            </th>
-            <th>
-                ROOM COLLECTION
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Furnitures)
-        {
+<p>
+    <a asp-page="Create">Add a Product</a>
+</p>
+<div class="card">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @item.SKU
-                </td>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.Price
-                </td>
-                <td>
-                    @item.RoomCollection
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
+                <th>
+                    SKU
+                </th>
+                <th>
+                    NAME
+                </th>
+                <th>
+                    PRICE
+                </th>
+                <th>
+                    ROOM COLLECTION
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Furnitures)
+            {
+                <tr>
+                    <td>
+                        @item.SKU
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Price
+                    </td>
+                    <td>
+                        @item.RoomCollection
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
