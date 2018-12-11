@@ -50,14 +50,14 @@ namespace InteriorShoppe
 
             //Furniture DB Context Services
             services.AddDbContext<InteriorShoppeDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                 options.UseSqlServer(Configuration.GetConnectionString("ShoppeProductionDB")));
             //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IInventory, InventoryServices>();
             services.AddTransient<IBasket, BasketService>();
 
             //Identity DB Context Services
             services.AddDbContext<ApplicationDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+                 options.UseSqlServer(Configuration.GetConnectionString("IdentityProductionDB")));
                  //options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             //Policy Services

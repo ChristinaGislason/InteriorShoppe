@@ -3,14 +3,16 @@ using InteriorShoppe.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InteriorShoppe.Migrations
 {
     [DbContext(typeof(InteriorShoppeDbContext))]
-    partial class InteriorShoppeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181211014731_ecom")]
+    partial class ecom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
