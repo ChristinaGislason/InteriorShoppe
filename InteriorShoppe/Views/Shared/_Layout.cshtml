@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using InteriorShoppe.Models
-
+@using System.Security.Claims
 
 @inject SignInManager<ApplicationUser> SignInManager
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,12 +22,12 @@
             <a href="@Url.Action("Index", "Home")">Home</a>
             <a href="@Url.Action("Index", "Shop")">Shop</a>
             @*<a>Living</a>
-        <a>Dining</a>
-        <a>Bedroom</a>
-        <a>Lighting</a>*@
+                <a>Dining</a>
+                <a>Bedroom</a>
+                <a>Lighting</a>*@
             <a href="@Url.Action("Index", "DormRoom")">Dorm Room</a>
             @*<a>Seasonal</a>
-        <a>Clearance</a>*@
+                <a>Clearance</a>*@
 
             @await Component.InvokeAsync("BasketComponent")
         </div>
@@ -40,6 +40,10 @@
                 <form asp-action="Logout" asp-controller="Account" method="post">
                     <button type="submit">Logout</button>
                 </form>
+                @if (User.HasClaim(ClaimTypes.Role, "Admin"))
+                {
+                    <a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                }
             }
             else
             {
@@ -52,11 +56,11 @@
                 </form>
             }
         </div>
-       
-       
+
+
     </div>
-    
-     @RenderBody()
-    
+
+    @RenderBody()
+
 </body>
 </html>

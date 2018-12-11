@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using InteriorShoppe.Data;
 using InteriorShoppe.Models;
 using InteriorShoppe.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InteriorShoppe.Controllers
@@ -29,7 +31,8 @@ namespace InteriorShoppe.Controllers
         /// <returns>Receipt View</returns>
         public async Task<IActionResult> Receipt()
         {
-            var userID = _userManager.GetUserId(HttpContext.User);
+            var user = HttpContext.User;
+            var userID = _userManager.GetUserId(user);
             var basketItems = await _basket.GetBasket(userID);
 
             return View(basketItems);

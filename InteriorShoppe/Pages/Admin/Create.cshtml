@@ -1,0 +1,48 @@
+﻿@page
+@model InteriorShoppe.Pages.Admin.CreateModel
+@{
+    Layout = "_Layout";
+}
+
+
+<h2>Create</h2>
+
+<hr />
+<div class="table">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="Furniture.SKU"></label>
+                <input asp-for="Furniture.SKU"/>
+                <span asp-validation-for="Furniture.SKU"></span>
+            </div>
+            <div>
+                <label asp-for="Furniture.Name"></label>
+                <input asp-for="Furniture.Name"/>
+                <span asp-validation-for="Furniture.Name"></span>
+            </div>
+            <div>
+                <label asp-for="Furniture.Price"></label>
+                <input asp-for="Furniture.Price"/>
+                <span asp-validation-for="Furniture.Price"></span>
+            </div>
+            <div>
+                <label asp-for="Furniture.RoomCollection"></label>
+                <input asp-for="Furniture.RoomCollection"/>
+                <span asp-validation-for="Furniture.RoomCollection"></span>
+            </div>
+            <div>
+                <label asp-for="Furniture.Image"></label>
+                <input asp-for="Furniture.Image"/>
+                <span asp-validation-for="Furniture.Image"></span>
+            </div>
+            <div>
+                <input type="submit" value="Create"/>
+            </div>
+        </form>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+

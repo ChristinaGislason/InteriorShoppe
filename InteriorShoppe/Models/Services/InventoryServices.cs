@@ -9,14 +9,24 @@ namespace InteriorShoppe.Models.Services
 {
     public class InventoryServices : IInventory
     {
-        public Task CreateFurniture(Furniture furniture)
+        private InteriorShoppeDbContext _context { get; set; }
+
+        public InventoryServices(InteriorShoppeDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteFurniture(Furniture furniture)
+        public async Task CreateFurniture(Furniture furniture)
         {
-            throw new NotImplementedException();
+            _context.Add(furniture);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteFurniture(int? id)
+        {
+            Furniture furniture = await _context.Furniture.FindAsync(id);
+            _context.Remove(furniture);
+            await _context.SaveChangesAsync();
         }
 
         public Task<List<Furniture>> GetAllFurniture()
@@ -24,14 +34,15 @@ namespace InteriorShoppe.Models.Services
             throw new NotImplementedException();
         }
 
-        public Task<Furniture> GetFurnitureByID(int? id)
+        public async Task<Furniture> GetFurnitureByID(int? id)
         {
-            throw new NotImplementedException();
+            return await _context.Furniture.FindAsync(id);
         }
 
-        public Task UpdateFurniture(Furniture furniture)
+        public async Task UpdateFurniture(Furniture furniture)
         {
-            throw new NotImplementedException();
+            _context.Furniture.Update(furniture);
+            await _context.SaveChangesAsync();
         }
     }
 }

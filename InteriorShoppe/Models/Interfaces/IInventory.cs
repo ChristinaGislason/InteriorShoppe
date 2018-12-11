@@ -18,6 +18,6 @@ namespace InteriorShoppe.Models.Interfaces
         Task UpdateFurniture(Furniture furniture);
 
         //Deleting
-        Task DeleteFurniture(Furniture furniture);
+        Task DeleteFurniture(int? id);
     }
 }
